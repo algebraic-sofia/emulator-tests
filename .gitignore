@@ -1,0 +1,5 @@
+/target
+*/**/machine-c-api.h
+.rustup
+.cargo
+dapp
