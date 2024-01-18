@@ -3,3 +3,4 @@
 .rustup
 .cargo
 dapp
+.bash_history
