@@ -1,4 +1,22 @@
-// Cartesi Machine constants.
+//! Cartesi Machine constants. These constants are used by the bindings to create a configuration
+//! for the machine.
+//!
+//! They are defined in the machine-emulator code in the files
+//!
+//! - src/pma-defines.h
+//! - src/Makefile (for the emulator version)
+//! - tools/template/machine-c-version.h.template
+//! - src/clua-cartesi.cpp
+//! - src/riscv-constants.h
+//!
+
+pub const LINUX_BOOTARGS: &str = "quiet earlycon=sbi console=hvc0 rootfstype=ext2 root=/dev/pmem0 rw init=/usr/sbin/cartesi-init";
+pub const LINUX_INIT: &str = "echo \"\n         .\n        / \\\\\n      /    \\\\\n\\\\---/---\\\\  /----\\\\\n \\\\       X       \\\\\n  \\\\----/  \\\\---/---\\\\\n       \\\\    / CARTESI\n        \\\\ /   MACHINE\n         '\n\"\nbusybox mkdir -p /run/drive-label && echo \"root\" > /run/drive-label/pmem0\nbusybox mkdir -p \"/mnt/dapp\" && busybox mount /dev/pmem1 \"/mnt/dapp\"\nbusybox mkdir -p /run/drive-label && echo \"dapp\" > /run/drive-label/pmem1\nUSER=dapp\n";
+
+pub const LINUX_PATH: &str = "/usr/share/cartesi-machine/images/linux.bin";
+pub const ROOTFS_PATH: &str = "/usr/share/cartesi-machine/images/rootfs.ext2";
+
+pub const CLUA_CONSTANTS: bool = true;
 
 pub const PMA_SHADOW_STATE_START_DEF: u64 = 0x0;
 pub const PMA_SHADOW_STATE_LENGTH_DEF: u64 = 0x1000;
@@ -29,8 +47,17 @@ pub const EMULATOR_VERSION_MAJOR: u64 = 9;
 pub const EMULATOR_VERSION_MINOR: u64 = 15;
 pub const EMULATOR_MARCHID: u64 = 15;
 
+#[cfg(CLUA_CONSTANTS)]
 pub const CM_VERSION_MAJOR: u64 = EMULATOR_VERSION_MAJOR;
+
+#[cfg(CLUA_CONSTANTS)]
 pub const CM_VERSION_MINOR: u64 = EMULATOR_VERSION_MINOR;
+
+#[cfg(not(CLUA_CONSTANTS))]
+pub const CM_VERSION_MAJOR: u64 = u64::MAX;
+
+#[cfg(not(CLUA_CONSTANTS))]
+pub const CM_VERSION_MINOR: u64 = u64::MAX;
 
 pub const XLEN: u64 = 64;
 
@@ -55,7 +82,10 @@ pub const MISA_EXT_C_MASK: u64 = 1 << MISA_EXT_C_SHIFT;
 
 pub const CM_MARCHID: u64 = EMULATOR_MARCHID;
 
-// pub const CM_MIMPID: u64 = CM_VERSION_MAJOR * 1000 + CM_VERSION_MINOR;
+#[cfg(CLUA_CONSTANTS)]
+pub const CM_MIMPID: u64 = CM_VERSION_MAJOR * 1000 + CM_VERSION_MINOR;
+
+#[cfg(not(CLUA_CONSTANTS))]
 pub const CM_MIMPID: u64 = u64::MAX;
 
 pub const MISA_MXL_VALUE: u64 = 2;
@@ -65,7 +95,13 @@ pub const MSTATUS_SXL_SHIFT: u64 = 34;
 pub const PMA_RAM_START: u64 = 0x80000000;
 pub const PC_INIT: u64 = PMA_RAM_START;
 pub const FCSR_INIT: u64 = 0;
+
+#[cfg(CLUA_CONSTANTS)]
 pub const MVENDORID_INIT: u64 = 0x6361727465736920;
+
+#[cfg(not(CLUA_CONSTANTS))]
+pub const MVENDORID_INIT: u64 = u64::MAX;
+
 pub const MARCHID_INIT: u64 = CM_MARCHID;
 pub const MIMPID_INIT: u64 = CM_MIMPID;
 pub const MCYCLE_INIT: u64 = 0;
