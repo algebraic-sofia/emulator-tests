@@ -1,6 +1,1 @@
-/target
-*/**/machine-c-api.h
-.rustup
-.cargo
-dapp
-.bash_history
+target
