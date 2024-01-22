@@ -1,6 +1,0 @@
-[workspace]
-
-members = [ 
-    "crates/advance-machine",
-    "crates/cartesi-bindings",
-]

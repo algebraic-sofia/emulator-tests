@@ -16,10 +16,6 @@ impl MerkleTreeProof {
         Self(ptr)
     }
 
-    pub(crate) fn as_ptr(&self) -> *mut cartesi_machine_sys::cm_merkle_tree_proof {
-        self.0
-    }
-
     /// Address of the target node
     pub fn target_address(&self) -> u64 {
         unsafe { (*self.0).target_address }

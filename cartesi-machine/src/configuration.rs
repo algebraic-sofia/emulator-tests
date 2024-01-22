@@ -1,7 +1,5 @@
 //! Configuration structures for the Cartesi Machine.
 
-use std::ffi::{c_char, CStr};
-
 use crate::ffi::{free_cstr, from_cstr, to_cstr};
 
 #[repr(C)]
